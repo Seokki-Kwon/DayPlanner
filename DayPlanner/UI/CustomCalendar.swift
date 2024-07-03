@@ -52,9 +52,12 @@ class CustomCalendar: UIView {
             }
             .asDriver(onErrorJustReturn: [])
             .drive(collectionView.rx.items(cellIdentifier: CalendarCell.reuseIdentifier, cellType: CalendarCell.self)){ [weak self] row, element, cell in
-                
+                guard let self = self else { return }
                 cell.dayOfMonth.text = element.dayOfMonth
-                cell.colorView.backgroundColor = element.color ?? .clear                                   
+                cell.colorView.backgroundColor = element.color ?? .clear
+                if currentDate.value == element.date {
+                    cell.selectView.backgroundColor = .darkGray
+                }
             }
             .disposed(by: bag)
         

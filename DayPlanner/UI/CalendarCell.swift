@@ -20,4 +20,9 @@ class CalendarCell: UICollectionViewCell {
         selectView.layer.cornerRadius = selectView.frame.size.width / 2
         innerView.layer.cornerRadius = innerView.frame.size.width / 2        
     }
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        selectView.backgroundColor = .clear
+    }
 }
