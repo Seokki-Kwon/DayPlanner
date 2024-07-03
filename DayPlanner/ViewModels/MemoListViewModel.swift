@@ -24,6 +24,7 @@ final class MemoListViewModel: MemoViewModelType, ViewModelType {
         let addButtonTap: ControlEvent<Void>
         let memoCellSelected: ControlEvent<Memo>
     }
+    
     struct Output {
         let tableViewDriver: Driver<[Memo]>
         let presentMemoComposeVC: Observable<Void>
@@ -39,7 +40,8 @@ final class MemoListViewModel: MemoViewModelType, ViewModelType {
             .bind(to: memoComposeTrigger)
             .disposed(by: bag)
         
-        return Output(tableViewDriver: memoData.asDriver(onErrorJustReturn: []), presentMemoComposeVC: memoComposeTrigger,
+        return Output(tableViewDriver: memoData.asDriver(onErrorJustReturn: []), 
+                      presentMemoComposeVC: memoComposeTrigger,
                       goToMemoDetailVC: memoCellSubject)
     }
 }

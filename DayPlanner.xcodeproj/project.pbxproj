@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		820F43632C35781300D33CAA /* TodayMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820F43622C35781300D33CAA /* TodayMemoCell.swift */; };
 		8213A0B42C2165CA00AAEEAC /* MemoComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */; };
 		8213A0B62C21685300AAEEAC /* MemoComposeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B52C21685300AAEEAC /* MemoComposeViewModel.swift */; };
 		8213A0B92C2179D100AAEEAC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B82C2179D100AAEEAC /* Extensions.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		820F43622C35781300D33CAA /* TodayMemoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMemoCell.swift; sourceTree = "<group>"; };
 		8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoComposeViewController.swift; sourceTree = "<group>"; };
 		8213A0B52C21685300AAEEAC /* MemoComposeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoComposeViewModel.swift; sourceTree = "<group>"; };
 		8213A0B82C2179D100AAEEAC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				82F472092C2B412700EC14C9 /* CustomSegmentedControl.swift */,
 				822E1BE52C2DBAEE001B4F54 /* CustomCalendar.swift */,
 				8271AC372C2E8F5800160010 /* CalendarCell.swift */,
+				820F43622C35781300D33CAA /* TodayMemoCell.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -306,6 +309,7 @@
 				82C88EAA2C1F586A00109913 /* BindableType.swift in Sources */,
 				82FC07CE2C288018002E5C82 /* SettingViewController.swift in Sources */,
 				8285B56B2C294A1600180AF4 /* CalenderViewController.swift in Sources */,
+				820F43632C35781300D33CAA /* TodayMemoCell.swift in Sources */,
 				82C88EA62C1F552800109913 /* ViewModelType.swift in Sources */,
 				8213A0B42C2165CA00AAEEAC /* MemoComposeViewController.swift in Sources */,
 			);
