@@ -356,7 +356,6 @@
                                                     <outlet property="colorView" destination="dRu-Tv-dxd" id="jE0-f2-C40"/>
                                                     <outlet property="dayOfMonth" destination="66Z-LX-gHP" id="D0h-Od-w0o"/>
                                                     <outlet property="innerView" destination="sCh-QO-st3" id="0eM-TW-TmP"/>
-                                                    <outlet property="selectView" destination="cr4-Xc-WH9" id="dhU-E6-0mJ"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>
