@@ -11,18 +11,27 @@ class CalendarCell: UICollectionViewCell {
     static let reuseIdentifier = "calCell"
     @IBOutlet weak var dayOfMonth: UILabel!
     @IBOutlet weak var colorView: UIView!
-    @IBOutlet weak var selectView: UIView!
+    
     
     @IBOutlet weak var innerView: UIView!
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        selectView.layer.cornerRadius = selectView.frame.size.width / 2
         innerView.layer.cornerRadius = innerView.frame.size.width / 2        
     }
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        selectView.backgroundColor = .clear
+        resetCell()
+    }
+    
+    func seletedCell() {
+        innerView.backgroundColor = .darkGray
+        dayOfMonth.textColor = .white
+    }
+    
+    func resetCell() {
+        innerView.backgroundColor = .systemGray6
+        dayOfMonth.textColor = .darkGray
     }
 }

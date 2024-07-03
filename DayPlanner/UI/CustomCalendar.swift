@@ -56,7 +56,7 @@ class CustomCalendar: UIView {
                 cell.dayOfMonth.text = element.dayOfMonth
                 cell.colorView.backgroundColor = element.color ?? .clear
                 if currentDate.value == element.date {
-                    cell.selectView.backgroundColor = .darkGray
+                    cell.seletedCell()
                 }
             }
             .disposed(by: bag)
