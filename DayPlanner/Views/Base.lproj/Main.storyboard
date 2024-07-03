@@ -704,9 +704,34 @@
                     <view key="view" contentMode="scaleToFill" id="Bfj-Lp-b03">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="jv4-Sy-NbQ">
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="defaultCell" id="AFk-sl-kbN">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="44.666667938232422"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="AFk-sl-kbN" id="Stw-dD-9MO">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="44.666667938232422"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="8Rs-T5-pTj"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="jv4-Sy-NbQ" firstAttribute="leading" secondItem="8Rs-T5-pTj" secondAttribute="leading" id="N2v-0o-hX2"/>
+                            <constraint firstItem="jv4-Sy-NbQ" firstAttribute="top" secondItem="8Rs-T5-pTj" secondAttribute="top" id="iyL-1M-rt9"/>
+                            <constraint firstItem="8Rs-T5-pTj" firstAttribute="bottom" secondItem="jv4-Sy-NbQ" secondAttribute="bottom" id="ool-Nd-FAG"/>
+                            <constraint firstItem="8Rs-T5-pTj" firstAttribute="trailing" secondItem="jv4-Sy-NbQ" secondAttribute="trailing" id="yv3-Xt-mzm"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="tableView" destination="jv4-Sy-NbQ" id="X1d-g4-dt4"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bsa-74-zbj" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

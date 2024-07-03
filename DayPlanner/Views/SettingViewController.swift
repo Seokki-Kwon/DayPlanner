@@ -6,24 +6,36 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class SettingViewController: UIViewController {
-
+    @IBOutlet weak var tableView: UITableView!
+    private var menuSubject = BehaviorSubject<[Menu]>(value: [.contact, .openSource])
+    private let bag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        bind()
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func bind() {
+        menuSubject
+            .asDriver(onErrorJustReturn: [])
+            .drive(tableView.rx.items) {tableView, row, element in
+                let cell = tableView.dequeueReusableCell(withIdentifier: "defaultCell")!
+                cell.textLabel?.text = element.title
+                return cell
+            }
+            .disposed(by: bag)
+        
+        tableView.rx.modelSelected(Menu.self)
+            .bind(onNext: movePage)
+            .disposed(by: bag)
     }
-    */
-
+    
+    func movePage(_ menu: Menu) {
+        
+    }
+    
 }
