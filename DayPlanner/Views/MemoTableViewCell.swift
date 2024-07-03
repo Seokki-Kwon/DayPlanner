@@ -10,7 +10,8 @@ import RxSwift
 
 class MemoTableViewCell: UITableViewCell {
     static let reuseIdentifier = "MemoCell"
-    @IBOutlet weak var titleLabel: UILabel!    
+    
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var memoView: UIView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var colorView: UIView!
