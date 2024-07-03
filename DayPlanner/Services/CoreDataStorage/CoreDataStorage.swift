@@ -65,6 +65,7 @@ final class CoreDataStorage: MemoStorageType {
     func updateMemo(memo: Memo) -> RxSwift.Observable<Void> {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
         fetchRequest.predicate = NSPredicate(format: "id == %@", memo.id as CVarArg)
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         
         do {
             if let fetchRequest = try mainContext.fetch(fetchRequest) as? [NSManagedObject],
@@ -120,7 +121,11 @@ final class CoreDataStorage: MemoStorageType {
     @discardableResult
     func fetchMemos() -> RxSwift.Observable<[Memo]> {
         do {
-            let data = try mainContext.fetch(MemoEntity.fetchRequest())            
+            
+            let fetchRequest = NSFetchRequest<MemoEntity>(entityName: "Memo")
+            fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
+            let data = try mainContext.fetch(fetchRequest)
+            
             let memoDatas = data.map { Memo(id: $0.id!, title: $0.title!, content: $0.content!, date: $0.date!, colorString: $0.color! )}
             store.onNext(memoDatas)
             return store

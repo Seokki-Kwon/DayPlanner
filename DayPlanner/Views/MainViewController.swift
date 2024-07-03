@@ -54,6 +54,14 @@ class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let menuItems = [
+            UIAction(title: "다가오는 일정", image: nil, handler: { _ in }),
+            UIAction(title: "지난 일정", image: nil, handler: { _ in })
+        ]
+        let menu = UIMenu(image: nil, identifier: nil, options: [], children: menuItems)
+        
+        navTitle.menu = menu
+        
         setNavTitle()
         setPageViewLayout()
     }
