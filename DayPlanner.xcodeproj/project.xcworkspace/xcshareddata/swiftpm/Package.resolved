@@ -1,6 +1,15 @@
 {
-  "originHash" : "17ad69a9d62bb5214561f4b13adc77420e1190aa388f7c14a5057af4cc73b509",
+  "originHash" : "3a92100ac231651157df8c333f4d5ef7fb7dc634c2bdc3b9759d12aaebf039d2",
   "pins" : [
+    {
+      "identity" : "acknowlist",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/vtourraine/AcknowList",
+      "state" : {
+        "revision" : "125ff1915a639bf7d97471a4d5ae16765d0c50f2",
+        "version" : "3.2.0"
+      }
+    },
     {
       "identity" : "rxswift",
       "kind" : "remoteSourceControl",

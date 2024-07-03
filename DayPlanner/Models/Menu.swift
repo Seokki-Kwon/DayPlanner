@@ -14,7 +14,7 @@ enum Menu: CaseIterable {
     var title: String {
         switch self {
         case .contact:
-            "문의 하기"
+            "문의하기"
         case .openSource:
             "오픈소스"
         }

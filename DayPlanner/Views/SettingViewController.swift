@@ -8,8 +8,10 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import MessageUI
+import AcknowList
 
-class SettingViewController: UIViewController {
+final class SettingViewController: UIViewController, MFMailComposeViewControllerDelegate {
     @IBOutlet weak var tableView: UITableView!
     private var menuSubject = BehaviorSubject<[Menu]>(value: [.contact, .openSource])
     private let bag = DisposeBag()
@@ -19,7 +21,7 @@ class SettingViewController: UIViewController {
         bind()
     }
     
-    func bind() {
+    private func bind() {
         menuSubject
             .asDriver(onErrorJustReturn: [])
             .drive(tableView.rx.items) {tableView, row, element in
@@ -34,8 +36,36 @@ class SettingViewController: UIViewController {
             .disposed(by: bag)
     }
     
-    func movePage(_ menu: Menu) {
-        
+    private func movePage(_ menu: Menu) {
+        switch menu {
+        case .contact:
+            sendEmail()
+        case .openSource:
+            openSource()
+        }
+    }
+    
+    private func sendEmail() {
+        if MFMailComposeViewController.canSendMail() {
+                   let compseVC = MFMailComposeViewController()
+                   compseVC.mailComposeDelegate = self
+                   
+                   compseVC.setToRecipients(["seokki0706@gmail.com"])
+                   compseVC.setSubject("Message Subject")
+                   compseVC.setMessageBody("개선사항 또는 발생한 버그에 대해서 적어주세요. \n ------------------------------------------", isHTML: false)
+                   
+                    present(compseVC, animated: true, completion: nil)
+                   
+               }
+               else {
+                   
+               }
+    }
+    
+    private func openSource() {
+        let acknowList = AcknowListViewController(fileNamed: "Package.resolved")
+        acknowList.navigationItem.title = "오픈소스/라이선스"
+              navigationController?.pushViewController(acknowList, animated: true)
     }
     
 }
