@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		820F43632C35781300D33CAA /* TodayMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820F43622C35781300D33CAA /* TodayMemoCell.swift */; };
 		820F43652C3580E600D33CAA /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820F43642C3580E600D33CAA /* Menu.swift */; };
+		820F43682C358EF500D33CAA /* AcknowList in Frameworks */ = {isa = PBXBuildFile; productRef = 820F43672C358EF500D33CAA /* AcknowList */; };
+		820F436A2C35911F00D33CAA /* Package.resolved in Resources */ = {isa = PBXBuildFile; fileRef = 820F43692C35911F00D33CAA /* Package.resolved */; };
 		8213A0B42C2165CA00AAEEAC /* MemoComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */; };
 		8213A0B62C21685300AAEEAC /* MemoComposeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B52C21685300AAEEAC /* MemoComposeViewModel.swift */; };
 		8213A0B92C2179D100AAEEAC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B82C2179D100AAEEAC /* Extensions.swift */; };
@@ -45,6 +47,7 @@
 /* Begin PBXFileReference section */
 		820F43622C35781300D33CAA /* TodayMemoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMemoCell.swift; sourceTree = "<group>"; };
 		820F43642C3580E600D33CAA /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
+		820F43692C35911F00D33CAA /* Package.resolved */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = Package.resolved; path = DayPlanner.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved; sourceTree = SOURCE_ROOT; };
 		8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoComposeViewController.swift; sourceTree = "<group>"; };
 		8213A0B52C21685300AAEEAC /* MemoComposeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoComposeViewModel.swift; sourceTree = "<group>"; };
 		8213A0B82C2179D100AAEEAC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -84,6 +87,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				82C88E962C1F4AC200109913 /* RxRelay in Frameworks */,
+				820F43682C358EF500D33CAA /* AcknowList in Frameworks */,
 				82C88E942C1F4AC200109913 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -140,6 +144,7 @@
 		82C88E7D2C1F4A7E00109913 /* DayPlanner */ = {
 			isa = PBXGroup;
 			children = (
+				820F43692C35911F00D33CAA /* Package.resolved */,
 				82C6BA692C2D29DD001CD0FC /* Protocol */,
 				82F4720B2C2B42CE00EC14C9 /* UI */,
 				8213A0B72C2179C000AAEEAC /* Utils */,
@@ -229,6 +234,7 @@
 			packageProductDependencies = (
 				82C88E932C1F4AC200109913 /* RxCocoa */,
 				82C88E952C1F4AC200109913 /* RxRelay */,
+				820F43672C358EF500D33CAA /* AcknowList */,
 			);
 			productName = MemoAppPratice;
 			productReference = 82C88E7B2C1F4A7E00109913 /* DayPlanner.app */;
@@ -260,6 +266,7 @@
 			mainGroup = 82C88E722C1F4A7E00109913;
 			packageReferences = (
 				82C88E922C1F4AC200109913 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				820F43662C358EF500D33CAA /* XCRemoteSwiftPackageReference "AcknowList" */,
 			);
 			productRefGroup = 82C88E7C2C1F4A7E00109913 /* Products */;
 			projectDirPath = "";
@@ -277,6 +284,7 @@
 			files = (
 				82C88E882C1F4A8000109913 /* Assets.xcassets in Resources */,
 				82C88E8B2C1F4A8000109913 /* Base in Resources */,
+				820F436A2C35911F00D33CAA /* Package.resolved in Resources */,
 				82C88E862C1F4A7E00109913 /* Base in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -546,6 +554,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		820F43662C358EF500D33CAA /* XCRemoteSwiftPackageReference "AcknowList" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vtourraine/AcknowList";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 		82C88E922C1F4AC200109913 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -557,6 +573,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		820F43672C358EF500D33CAA /* AcknowList */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 820F43662C358EF500D33CAA /* XCRemoteSwiftPackageReference "AcknowList" */;
+			productName = AcknowList;
+		};
 		82C88E932C1F4AC200109913 /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 82C88E922C1F4AC200109913 /* XCRemoteSwiftPackageReference "RxSwift" */;
