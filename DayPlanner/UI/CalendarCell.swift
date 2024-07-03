@@ -22,7 +22,7 @@ class CalendarCell: UICollectionViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        resetCell()
+        resetUI()
     }
     
     func seletedCell() {
@@ -30,7 +30,7 @@ class CalendarCell: UICollectionViewCell {
         dayOfMonth.textColor = .white
     }
     
-    func resetCell() {
+    func resetUI() {
         innerView.backgroundColor = .systemGray6
         dayOfMonth.textColor = .darkGray
     }

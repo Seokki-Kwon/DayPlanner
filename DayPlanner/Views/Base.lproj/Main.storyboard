@@ -63,7 +63,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YnW-vh-8rC">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="QK9-GO-dg4">
+                        <barButtonItem key="leftBarButtonItem" title="Item" changesSelectionAsPrimaryAction="YES" id="QK9-GO-dg4">
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="testButton:" destination="Zfe-mP-wYw" id="aft-7R-hvq"/>

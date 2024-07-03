@@ -113,8 +113,13 @@ class MemoComposeViewModel: MemoViewModelType, ViewModelType {
             let color = try colorSubject.value()
             let date = try dateSubject.value()
             storage.updateMemo(memo: Memo(id: memo.id, title: title, content: content, date: date, colorString: color.toHexString()))
+                .do(onNext: { [weak self] in
+                    guard let self = self else { return }
+                    storage.fetchMemos()
+                })
                 .bind(to: trigger)
                 .disposed(by: bag)
+            
         } catch {
             print("Memo update failed")
         }
