@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		820F43632C35781300D33CAA /* TodayMemoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820F43622C35781300D33CAA /* TodayMemoCell.swift */; };
+		820F43652C3580E600D33CAA /* Menu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 820F43642C3580E600D33CAA /* Menu.swift */; };
 		8213A0B42C2165CA00AAEEAC /* MemoComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */; };
 		8213A0B62C21685300AAEEAC /* MemoComposeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B52C21685300AAEEAC /* MemoComposeViewModel.swift */; };
 		8213A0B92C2179D100AAEEAC /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8213A0B82C2179D100AAEEAC /* Extensions.swift */; };
@@ -43,6 +44,7 @@
 
 /* Begin PBXFileReference section */
 		820F43622C35781300D33CAA /* TodayMemoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayMemoCell.swift; sourceTree = "<group>"; };
+		820F43642C3580E600D33CAA /* Menu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Menu.swift; sourceTree = "<group>"; };
 		8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoComposeViewController.swift; sourceTree = "<group>"; };
 		8213A0B52C21685300AAEEAC /* MemoComposeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoComposeViewModel.swift; sourceTree = "<group>"; };
 		8213A0B82C2179D100AAEEAC /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				82C88E9F2C1F4E2200109913 /* Memo.swift */,
 				827EF4EF2C306B4C0026F6C6 /* Day.swift */,
+				820F43642C3580E600D33CAA /* Menu.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -287,6 +290,7 @@
 			files = (
 				82C88EA42C1F551400109913 /* MemoListViewModel.swift in Sources */,
 				8271AC3A2C2E94E900160010 /* CalendarHelper.swift in Sources */,
+				820F43652C3580E600D33CAA /* Menu.swift in Sources */,
 				8271AC382C2E8F5800160010 /* CalendarCell.swift in Sources */,
 				82C88EA22C1F532D00109913 /* MemoStorageType.swift in Sources */,
 				827EF4EE2C3063030026F6C6 /* CalendarViewModel.swift in Sources */,
