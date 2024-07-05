@@ -9,38 +9,26 @@ import UIKit
 import RxCocoa
 import RxSwift
 
-class MainViewController: UIViewController {
+final class MainViewController: UIViewController {
+    // MARK: - Propertis
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var settingButton: UIBarButtonItem!
     @IBOutlet weak var navTitle: UIBarButtonItem!
-    
     @IBOutlet weak var shadowView: UIView!
+    
     private let bag = DisposeBag()
-    
+    private var pageViewController: UIPageViewController!
     var viewModel: MainViewModel!
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        shadowView.layer.shadowColor = UIColor.lightGray.cgColor
-        shadowView.layer.shadowOpacity = 0.8
-        shadowView.layer.shadowOffset = CGSize(width: 0, height: 0)
-        shadowView.layer.shadowRadius = 2
-        shadowView.layer.masksToBounds = false
-        shadowView.layer.cornerRadius = 16
-        shadowView.layer.backgroundColor = UIColor.white.cgColor
-    }
     
     private lazy var subViewControllers: [UIViewController] = {
         // binding
         var memoListVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MemoList") as! MemoListViewController
         
         var calendarVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MemoCalender") as! CalenderViewController
-        
-        let storage = CoreDataStorage(modelName: "MemoApp")
-        let listViewModel = MemoListViewModel(storage: storage)
-        let calendarViewModel = CalendarViewModel(storage: storage)
+                
+        let listViewModel = MemoListViewModel(storage: viewModel.storage)
+        let calendarViewModel = CalendarViewModel(storage: viewModel.storage)
         
         memoListVC.bind(viewModel: listViewModel)
         calendarVC.bind(viewModel: calendarViewModel)
@@ -50,20 +38,24 @@ class MainViewController: UIViewController {
             calendarVC
         ]
     }()
-    private var pageViewController: UIPageViewController!
     
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let menuItems = [
-            UIAction(title: "다가오는 일정", image: nil, handler: { _ in }),
-            UIAction(title: "지난 일정", image: nil, handler: { _ in })
-        ]
-        let menu = UIMenu(image: nil, identifier: nil, options: [], children: menuItems)
-        
-        navTitle.menu = menu
-        
+        setupUI()
         setNavTitle()
         setPageViewLayout()
+    }
+    
+    // MARK: - Helpers
+    private func setupUI() {
+        shadowView.layer.shadowColor = UIColor.lightGray.cgColor
+        shadowView.layer.shadowOpacity = 0.8
+        shadowView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        shadowView.layer.shadowRadius = 2
+        shadowView.layer.masksToBounds = false
+        shadowView.layer.cornerRadius = 16
+        shadowView.layer.backgroundColor = UIColor.white.cgColor
     }
     
     private func setNavTitle() {
@@ -84,8 +76,29 @@ class MainViewController: UIViewController {
         
         pageViewController.setViewControllers([subViewControllers[0]], direction: .forward, animated: true)
     }
+    
+    private func goToSettingVC() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let settingVC = storyboard.instantiateViewController(withIdentifier: "Setting") as? SettingViewController else {
+            fatalError()
+        }
+        
+        self.navigationController?.pushViewController(settingVC, animated: true)
+    }
+    
+    private func setPage(_ index: Int) {
+        var direction: UIPageViewController.NavigationDirection
+        let willShownViewController = subViewControllers[index]
+        if let _ = willShownViewController as? MemoListViewController {
+            direction = .reverse
+        } else {
+            direction = .forward
+        }
+        pageViewController.setViewControllers([subViewControllers[index]], direction: direction, animated: true)
+    }
 }
 
+// MARK: - Bind
 extension MainViewController: BindableType {
     
     func bindViewModel() {
@@ -107,27 +120,6 @@ extension MainViewController: BindableType {
             .map { $0 == 0 ? "다가오는 일정" : "캘린더"}
             .drive(navTitle.rx.title)
             .disposed(by: bag)
-        
-    }
-    
-    private func setPage(_ index: Int) {
-        var direction: UIPageViewController.NavigationDirection
-        let willShownViewController = subViewControllers[index]
-        if let _ = willShownViewController as? MemoListViewController {
-            direction = .reverse
-        } else {
-            direction = .forward
-        }
-        pageViewController.setViewControllers([subViewControllers[index]], direction: direction, animated: true)
-    }
-    
-    private func goToSettingVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        guard let settingVC = storyboard.instantiateViewController(withIdentifier: "Setting") as? SettingViewController else {
-            fatalError()
-        }
-        
-        self.navigationController?.pushViewController(settingVC, animated: true)
     }
 }
 
