@@ -22,7 +22,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard var mainVC = nav.viewControllers.first as? MainViewController else {
             fatalError()
         }
-        let viewModel = MainViewModel()
+        
+        let viewModel = MainViewModel(storage: CoreDataStorage(modelName: "MemoApp"))
         mainVC.bind(viewModel: viewModel)
         
         window?.rootViewController = nav

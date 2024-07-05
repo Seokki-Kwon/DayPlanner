@@ -9,7 +9,8 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-final class MainViewModel: ViewModelType {
+final class MainViewModel: MemoViewModelType, ViewModelType {
+    
     struct Input {
         let settingButtonTap: ControlEvent<Void>
         let segmentSeleted: ControlProperty<Int>
@@ -19,7 +20,7 @@ final class MainViewModel: ViewModelType {
         let movePage: Driver<Int>        
     }
     
-    func transform(input: Input) -> Output {
+    func transform(input: Input) -> Output {        
         return Output(goToSettingVC: input.settingButtonTap.asObservable(),movePage: input.segmentSeleted.asDriver())
     }
 }

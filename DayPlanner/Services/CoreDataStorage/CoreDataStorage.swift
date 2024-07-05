@@ -120,8 +120,7 @@ final class CoreDataStorage: MemoStorageType {
     /// 메모 가져오기
     @discardableResult
     func fetchMemos() -> RxSwift.Observable<[Memo]> {
-        do {
-            
+        do {            
             let fetchRequest = NSFetchRequest<MemoEntity>(entityName: "Memo")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
             let data = try mainContext.fetch(fetchRequest)
