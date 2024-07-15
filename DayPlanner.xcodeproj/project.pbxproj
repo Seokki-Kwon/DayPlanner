@@ -165,11 +165,11 @@
 			children = (
 				82C88E842C1F4A7E00109913 /* Main.storyboard */,
 				82C88E892C1F4A8000109913 /* LaunchScreen.storyboard */,
+				825CC9A12C29DE4700B0F0FA /* MainViewController.swift */,
 				82C88E9B2C1F4D6800109913 /* MemoTableViewCell.swift */,
 				82C88EA72C1F580800109913 /* MemoListViewController.swift */,
 				8213A0B32C2165CA00AAEEAC /* MemoComposeViewController.swift */,
 				82FC07CD2C288018002E5C82 /* SettingViewController.swift */,
-				825CC9A12C29DE4700B0F0FA /* MainViewController.swift */,
 				8285B56A2C294A1600180AF4 /* CalenderViewController.swift */,
 			);
 			path = Views;
