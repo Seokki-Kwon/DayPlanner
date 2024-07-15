@@ -8,15 +8,17 @@
 import Foundation
 import RxSwift
 
-protocol MemoStorageType {    
-    func memoList(_ filter: Filter) -> Void
-    var filterdData: BehaviorSubject<[Memo]> { get set }
+protocol MemoStorageType {
+    var memoDatas: BehaviorSubject<[Memo]> { get set }
+    
     @discardableResult
-    func createMemo(memo: Memo) -> Observable<Void>
+    func filter(_ filter: Filter) -> Observable<Void>
     @discardableResult
-    func updateMemo(memo: Memo) -> Observable<Void>
+    func create(memo: Memo) -> Observable<Void>
     @discardableResult
-    func deleteMemo(memo: Memo) -> Observable<Void>
+    func update(memo: Memo) -> Observable<Void>
     @discardableResult
-    func fetchMemos() -> Observable<[Memo]>    
+    func delete(memo: Memo) -> Observable<Void>
+    @discardableResult
+    func fetch() -> Observable<[Memo]>    
 }

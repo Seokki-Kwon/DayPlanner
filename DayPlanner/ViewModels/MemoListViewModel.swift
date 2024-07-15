@@ -17,7 +17,7 @@ final class MemoListViewModel: MemoViewModelType, ViewModelType {
     private let memoCellSubject = PublishSubject<Memo>()
     
     private var memoData: Observable<[Memo]> {        
-        return storage.filterdData
+        return storage.memoDatas
     }
     
     struct Input {
