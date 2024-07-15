@@ -127,6 +127,10 @@ class MemoComposeViewModel: MemoViewModelType, ViewModelType {
     
     private func performDelete(actionType: ActionSheetType) {
         storage.deleteMemo(memo: memo)
+            .do(onNext: { [weak self] in
+                guard let self = self else { return }
+                storage.fetchMemos()
+            })
             .bind(to: trigger)
             .disposed(by: bag)
     }

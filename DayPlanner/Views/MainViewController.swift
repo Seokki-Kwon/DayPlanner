@@ -8,6 +8,7 @@
 import UIKit
 import RxCocoa
 import RxSwift
+import RxAppState
 
 final class MainViewController: UIViewController {
     // MARK: - Propertis
@@ -104,12 +105,14 @@ final class MainViewController: UIViewController {
 extension MainViewController: BindableType {
     
     func bindViewModel() {
+        
         let filterSubject = BehaviorSubject<Filter>(value: .all)
         // binding
         let input = MainViewModel.Input(settingButtonTap: settingButton.rx.tap,
                                         segmentSeleted: segmentedControl.rx.selectedSegmentIndex,
                                         titleTap: navTitle.rx.tap,
-                                        filterSubject: filterSubject)
+                                        filterSubject: filterSubject,
+                                        viewWillAppear: self.rx.viewWillAppear)
         
         let output = viewModel.transform(input: input)
         
@@ -127,7 +130,10 @@ extension MainViewController: BindableType {
             .disposed(by: bag)
         
         output.tileTapped
-            .flatMap { self.navTitle.presentMenu()}
+            .debug()
+            .flatMapLatest {
+                self.navTitle.presentMenu()
+            }
             .bind(to: filterSubject)
             .disposed(by: bag)
         
