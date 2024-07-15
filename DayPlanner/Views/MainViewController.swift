@@ -105,8 +105,8 @@ final class MainViewController: UIViewController {
 extension MainViewController: BindableType {
     
     func bindViewModel() {
-        
         let filterSubject = BehaviorSubject<Filter>(value: .all)
+        
         // binding
         let input = MainViewModel.Input(settingButtonTap: settingButton.rx.tap,
                                         segmentSeleted: segmentedControl.rx.selectedSegmentIndex,
@@ -125,18 +125,26 @@ extension MainViewController: BindableType {
             .disposed(by: bag)
         
         output.movePage
-            .map { $0 == 0 ? "전체 일정" : "캘린더"}
+            .map { $0 == 0 ? "전체 일정" : "캘린더" }
             .drive(navTitle.rx.title)
             .disposed(by: bag)
         
         output.tileTapped
             .debug()
-            .flatMapLatest {
-                self.navTitle.presentMenu()
-            }
+            .withUnretained(self)
+            .flatMapLatest({ (owner, _) -> Observable<Filter> in
+                owner.navTitle.presentMenu()
+            })
             .bind(to: filterSubject)
             .disposed(by: bag)
         
+        output.selecteFilter
+            .map { $0.rawValue }
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, text) in
+                owner.navTitle.title = text
+            })
+            .disposed(by: bag)
     }
 }
 

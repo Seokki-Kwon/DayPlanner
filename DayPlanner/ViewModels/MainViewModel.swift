@@ -25,6 +25,7 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
         let showMenu: Observable<Void>
         let movePage: Driver<Int>
         let tileTapped: ControlEvent<Void>
+        let selecteFilter: Observable<Filter>
     }
     
     func transform(input: Input) -> Output {
@@ -35,17 +36,20 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
             .filter { $0 == 0 }
             .map { _ -> Void in  }
         
-        Observable.combineLatest(input.filterSubject, input.viewWillAppear)
+        let filterShared = Observable.combineLatest(input.filterSubject, input.viewWillAppear)
+            .share()
+        
+        filterShared
             .map { $0.0 }
             .subscribe(onNext: { [weak self] filter in
                 guard let self = self else { return }
                 switch filter {
                 case .all:                    
-                    storage.memoList(.all)
+                    storage.filter(.all)
                 case .last:
-                    storage.memoList(.last)
+                    storage.filter(.last)
                 case .upcomming:
-                    storage.memoList(.upcomming)
+                    storage.filter(.upcomming)
                 }
             })
             .disposed(by: bag)
@@ -54,6 +58,7 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
         return Output(goToSettingVC: input.settingButtonTap.asObservable(),
                       showMenu: showMenuObservable,
                       movePage: input.segmentSeleted.asDriver(),
-                      tileTapped: input.titleTap)
+                      tileTapped: input.titleTap,
+                      selecteFilter: filterShared.map { $0.0} )
     }
 }
