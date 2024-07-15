@@ -16,7 +16,8 @@ enum Filter {
 
 final class CoreDataStorage: MemoStorageType {
     let modelName: String
-    let store = BehaviorSubject<[Memo]>(value: [])
+
+    private let store = BehaviorSubject<[Memo]>(value: [])
     var filterdData = BehaviorSubject<[Memo]>(value: [])
     
     init(modelName: String) {
@@ -56,7 +57,7 @@ final class CoreDataStorage: MemoStorageType {
         do {
             _ = try mainContext.save()
             let currentData = try store.value()
-            store.onNext(currentData + [memo])
+            store.onNext(currentData + [memo])            
             return Observable.just(())
         } catch {
             return Observable.error(error)
@@ -136,9 +137,10 @@ final class CoreDataStorage: MemoStorageType {
         }
     }
     
-    func memoList(_ filter: Filter = .all)  {        
+    func memoList(_ filter: Filter = .all)  { 
+        
         switch filter {
-        case .all:
+        case .all:            
             try? filterdData.onNext(store.value())
         case .last:
             try? filterdData.onNext(store.value().filter {

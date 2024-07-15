@@ -17,7 +17,9 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
         let segmentSeleted: ControlProperty<Int>
         let titleTap: ControlEvent<Void>
         let filterSubject: BehaviorSubject<Filter>
+        let viewWillAppear: Observable<Bool>
     }
+    
     struct Output {
         let goToSettingVC: Observable<Void>
         let showMenu: Observable<Void>
@@ -33,11 +35,12 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
             .filter { $0 == 0 }
             .map { _ -> Void in  }
         
-        input.filterSubject
+        Observable.combineLatest(input.filterSubject, input.viewWillAppear)
+            .map { $0.0 }
             .subscribe(onNext: { [weak self] filter in
                 guard let self = self else { return }
                 switch filter {
-                case .all:
+                case .all:                    
                     storage.memoList(.all)
                 case .last:
                     storage.memoList(.last)
