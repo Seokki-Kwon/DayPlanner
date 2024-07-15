@@ -10,22 +10,20 @@ import RxSwift
 import RxCocoa
 import CoreData
 
-enum Filter {
-    case all, upcomming, last
+enum Filter: String {
+    case all = "전체 일정", upcomming = "다가오는 일정", last = "지난 일정"
 }
 
+/// CoreData < -> ViewModel
 final class CoreDataStorage: MemoStorageType {
-    let modelName: String
-
-    private let store = BehaviorSubject<[Memo]>(value: [])
-    var filterdData = BehaviorSubject<[Memo]>(value: [])
     
-    init(modelName: String) {
-        self.modelName = modelName
-    }
+    public var memoDatas = BehaviorSubject<[Memo]>(value: [])
+    
+    private let modelName: String
+    private let store = BehaviorSubject<[Memo]>(value: [])
     
     // container
-    lazy var persistentContainer: NSPersistentContainer = {
+    private lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: modelName)
         container.loadPersistentStores(completionHandler: { (storeDescription, error) in
             if let error = error as NSError? {
@@ -40,9 +38,13 @@ final class CoreDataStorage: MemoStorageType {
         return persistentContainer.viewContext
     }
     
+    init(modelName: String) {
+        self.modelName = modelName
+    }
+    
     /// 메모 추가
     @discardableResult
-    func createMemo(memo: Memo) -> RxSwift.Observable<Void> {
+    func create(memo: Memo) -> RxSwift.Observable<Void> {
         guard let entity = NSEntityDescription.entity(forEntityName: "Memo", in: mainContext) else {
             return Observable.empty()
         }
@@ -57,7 +59,7 @@ final class CoreDataStorage: MemoStorageType {
         do {
             _ = try mainContext.save()
             let currentData = try store.value()
-            store.onNext(currentData + [memo])            
+            store.onNext(currentData + [memo])
             return Observable.just(())
         } catch {
             return Observable.error(error)
@@ -66,14 +68,14 @@ final class CoreDataStorage: MemoStorageType {
     
     /// 메모 업데이트(제목, 내용)
     @discardableResult
-    func updateMemo(memo: Memo) -> RxSwift.Observable<Void> {
+    func update(memo: Memo) -> RxSwift.Observable<Void> {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
         fetchRequest.predicate = NSPredicate(format: "id == %@", memo.id as CVarArg)
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
         
         do {
             if let fetchRequest = try mainContext.fetch(fetchRequest) as? [NSManagedObject],
-               let memoObject = fetchRequest.first {                
+               let memoObject = fetchRequest.first {
                 memoObject.setValue(memo.id, forKey: "id")
                 memoObject.setValue(memo.title, forKey: "title")
                 memoObject.setValue(memo.content, forKey: "content")
@@ -89,7 +91,7 @@ final class CoreDataStorage: MemoStorageType {
                 }
                 
             } else {
-                return createMemo(memo: memo)
+                return create(memo: memo)
             }
             
             return Observable.just(())
@@ -100,7 +102,7 @@ final class CoreDataStorage: MemoStorageType {
     
     /// 메모 삭제
     @discardableResult
-    func deleteMemo(memo: Memo) -> RxSwift.Observable<Void> {
+    func delete(memo: Memo) -> RxSwift.Observable<Void> {
         // NSFetchRequest CoreData에서 검색을 하기위함
         // NSPredicate NSArray를 필터링
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Memo")
@@ -123,8 +125,8 @@ final class CoreDataStorage: MemoStorageType {
     
     /// 메모 가져오기
     @discardableResult
-    func fetchMemos() -> RxSwift.Observable<[Memo]> {
-        do {            
+    func fetch() -> RxSwift.Observable<[Memo]> {
+        do {
             let fetchRequest = NSFetchRequest<MemoEntity>(entityName: "Memo")
             fetchRequest.sortDescriptors = [NSSortDescriptor(key: "date", ascending: true)]
             let data = try mainContext.fetch(fetchRequest)
@@ -137,21 +139,23 @@ final class CoreDataStorage: MemoStorageType {
         }
     }
     
-    func memoList(_ filter: Filter = .all)  { 
-        
+    
+    /// 메모 필터링
+    func filter(_ filter: Filter = .all) -> Observable<Void>  {
         switch filter {
-        case .all:            
-            try? filterdData.onNext(store.value())
+        case .all:
+            try? memoDatas.onNext(store.value())
         case .last:
-            try? filterdData.onNext(store.value().filter {
+            try? memoDatas.onNext(store.value().filter {
                 // 지난날짜 이거나 시간이 지난경우
                 $0.date.checkBeforeToday() == .orderedAscending || $0.date.compare(Date()) == .orderedAscending
             })
         case .upcomming:
-            try? filterdData.onNext(store.value().filter { 
+            try? memoDatas.onNext(store.value().filter {
                 // 비교날자가 이후날짜 이거나 같은날짜 시간보다 적은경우
                 $0.date.checkBeforeToday() == .orderedDescending || $0.date.compare(Date()) == .orderedDescending
             })
         }
+        return Observable.just(())
     }
 }

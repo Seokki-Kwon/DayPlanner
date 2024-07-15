@@ -112,10 +112,10 @@ class MemoComposeViewModel: MemoViewModelType, ViewModelType {
             let content = try memoContentSubject.value()
             let color = try colorSubject.value()
             let date = try dateSubject.value()
-            storage.updateMemo(memo: Memo(id: memo.id, title: title, content: content, date: date, colorString: color.toHexString()))
+            storage.update(memo: Memo(id: memo.id, title: title, content: content, date: date, colorString: color.toHexString()))
                 .do(onNext: { [weak self] in
                     guard let self = self else { return }
-                    storage.fetchMemos()
+                    storage.fetch()
                 })
                 .bind(to: trigger)
                 .disposed(by: bag)
@@ -126,10 +126,10 @@ class MemoComposeViewModel: MemoViewModelType, ViewModelType {
     }
     
     private func performDelete(actionType: ActionSheetType) {
-        storage.deleteMemo(memo: memo)
+        storage.delete(memo: memo)
             .do(onNext: { [weak self] in
                 guard let self = self else { return }
-                storage.fetchMemos()
+                storage.fetch()
             })
             .bind(to: trigger)
             .disposed(by: bag)

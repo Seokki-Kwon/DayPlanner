@@ -11,7 +11,7 @@ import RxCocoa
 
 final class CalendarViewModel: MemoViewModelType, ViewModelType {
     private var memoData: Observable<[Memo]> {
-        return storage.fetchMemos()
+        return storage.fetch()
     }
     private let bag = DisposeBag()
     private let currentMonthMemo = BehaviorRelay<[Memo]>(value: [])
