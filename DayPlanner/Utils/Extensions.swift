@@ -65,10 +65,28 @@ extension Date {
         
         return day == currentDay && month == currentMonth
     }
+    
+    /// 오늘보다 이전인지 이후인지 체크하는 함수
+    func checkBeforeToday() -> ComparisonResult {
+        let order = Calendar.current.compare(self, to: Date(), toGranularity: .day)
+        
+        switch order {
+            // 선택된 날짜가 오늘보다 이전인경우
+        case .orderedAscending:
+            return .orderedAscending
+            // 선택된 날짜가 오늘보다 이후
+        case .orderedDescending:
+            return .orderedDescending
+            // 선택된 날짜가 오늘보다 같은경우
+        case .orderedSame:
+            return .orderedSame
+        }
+    }
 }
 
 // MARK: - UIViewController
 extension UIViewController {
+    
     func presentActionSheet<T: Sequence>(actionType: T, inputSubject: PublishSubject<T.Element>) where T.Element == ActionSheetType {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
@@ -148,5 +166,45 @@ extension UIColor {
         let rgb:Int = (Int)(r*255)<<16 | (Int)(g*255)<<8 | (Int)(b*255)<<0
 
         return String(format:"#%06x", rgb)
+    }
+}
+
+extension UIBarButtonItem {
+    func presentMenu() -> Observable<Filter> {
+      
+      return  Observable.create { [weak self] observer in
+            let all = UIAction(
+                title: "전체 일정",
+                image: nil,
+                handler: { _ in
+                    observer.onNext(Filter.all)
+                    self?.title = "전체 일정"
+                })
+
+            let upcomming = UIAction(
+                title: "다가오는 일정",
+                image: nil,
+                handler: { _ in
+                    observer.onNext(Filter.upcomming)
+                    self?.title = "다가오는 일정"
+                })
+            
+            let last = UIAction(
+                title: "지난 일정",
+                image: nil,
+                handler: { _ in
+                    observer.onNext(Filter.last)
+                    self?.title = "지난 일정"
+                })
+          
+          
+            let Items = [all, upcomming, last]
+          
+            if self?.menu == nil {
+              self?.menu = UIMenu(title: "", children: Items)
+           }
+            
+            return Disposables.create()
+        }
     }
 }

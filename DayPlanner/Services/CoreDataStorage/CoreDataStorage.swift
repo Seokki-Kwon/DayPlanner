@@ -10,11 +10,14 @@ import RxSwift
 import RxCocoa
 import CoreData
 
+enum Filter {
+    case all, upcomming, last
+}
+
 final class CoreDataStorage: MemoStorageType {
-    
-    
     let modelName: String
-    private let store = BehaviorSubject<[Memo]>(value: [])
+    let store = BehaviorSubject<[Memo]>(value: [])
+    var filterdData = BehaviorSubject<[Memo]>(value: [])
     
     init(modelName: String) {
         self.modelName = modelName
@@ -130,6 +133,23 @@ final class CoreDataStorage: MemoStorageType {
             return store
         } catch {
             return Observable.error(error)
+        }
+    }
+    
+    func memoList(_ filter: Filter = .all)  {        
+        switch filter {
+        case .all:
+            try? filterdData.onNext(store.value())
+        case .last:
+            try? filterdData.onNext(store.value().filter {
+                // 지난날짜 이거나 시간이 지난경우
+                $0.date.checkBeforeToday() == .orderedAscending || $0.date.compare(Date()) == .orderedAscending
+            })
+        case .upcomming:
+            try? filterdData.onNext(store.value().filter { 
+                // 비교날자가 이후날짜 이거나 같은날짜 시간보다 적은경우
+                $0.date.checkBeforeToday() == .orderedDescending || $0.date.compare(Date()) == .orderedDescending
+            })
         }
     }
 }

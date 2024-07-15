@@ -18,7 +18,9 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var shadowView: UIView!
     
     private let bag = DisposeBag()
+    
     private var pageViewController: UIPageViewController!
+    
     var viewModel: MainViewModel!
     
     private lazy var subViewControllers: [UIViewController] = {
@@ -26,7 +28,7 @@ final class MainViewController: UIViewController {
         var memoListVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MemoList") as! MemoListViewController
         
         var calendarVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MemoCalender") as! CalenderViewController
-                
+        
         let listViewModel = MemoListViewModel(storage: viewModel.storage)
         let calendarViewModel = CalendarViewModel(storage: viewModel.storage)
         
@@ -102,9 +104,12 @@ final class MainViewController: UIViewController {
 extension MainViewController: BindableType {
     
     func bindViewModel() {
+        let filterSubject = BehaviorSubject<Filter>(value: .all)
         // binding
         let input = MainViewModel.Input(settingButtonTap: settingButton.rx.tap,
-                                        segmentSeleted: segmentedControl.rx.selectedSegmentIndex)
+                                        segmentSeleted: segmentedControl.rx.selectedSegmentIndex,
+                                        titleTap: navTitle.rx.tap,
+                                        filterSubject: filterSubject)
         
         let output = viewModel.transform(input: input)
         
@@ -117,9 +122,15 @@ extension MainViewController: BindableType {
             .disposed(by: bag)
         
         output.movePage
-            .map { $0 == 0 ? "다가오는 일정" : "캘린더"}
+            .map { $0 == 0 ? "전체 일정" : "캘린더"}
             .drive(navTitle.rx.title)
             .disposed(by: bag)
+        
+        output.tileTapped
+            .flatMap { self.navTitle.presentMenu()}
+            .bind(to: filterSubject)
+            .disposed(by: bag)
+        
     }
 }
 

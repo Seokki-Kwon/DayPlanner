@@ -10,15 +10,22 @@ import RxSwift
 import RxCocoa
 
 final class MemoListViewController: UIViewController, BindableType {
+    
     var viewModel: MemoListViewModel!
+    
     private let bag = DisposeBag()
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var addButton: UIButton!
     
     
     override func viewDidLoad() {
-        tableView.rowHeight = 90
         super.viewDidLoad()
+        setTableView()
+    }
+    
+    func setTableView() {
+        tableView.rowHeight = 90
     }
     
     func bindViewModel() {

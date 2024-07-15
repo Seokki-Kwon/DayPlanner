@@ -9,7 +9,7 @@ import UIKit
 
 // 뷰컨에서 채택하는 타입
 // viewModel을 동적타입으로 받는다
-protocol BindableType {
+protocol BindableType: NSObject {
     associatedtype ViewModelType
     
     var viewModel: ViewModelType! { get set }
@@ -18,7 +18,7 @@ protocol BindableType {
 
 extension BindableType where Self: UIViewController {
     /// ViewModel을 설정하고 bindViewModel() 메서드를 수행한다.
-    mutating func bind(viewModel: ViewModelType) {
+    func bind(viewModel: ViewModelType) {
         self.viewModel = viewModel
         loadViewIfNeeded()
         bindViewModel()
