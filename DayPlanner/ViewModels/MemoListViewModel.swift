@@ -16,7 +16,7 @@ final class MemoListViewModel: MemoViewModelType, ViewModelType {
     private let memoComposeTrigger = PublishSubject<Void>()
     private let memoCellSubject = PublishSubject<Memo>()
     
-    private var memoData: Observable<[Memo]> {
+    private var memoData: Observable<[Memo]> {        
         return storage.filterdData
     }
     

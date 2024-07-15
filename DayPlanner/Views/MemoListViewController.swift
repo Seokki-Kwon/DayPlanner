@@ -22,10 +22,11 @@ final class MemoListViewController: UIViewController, BindableType {
     override func viewDidLoad() {
         super.viewDidLoad()
         setTableView()
+        
     }
     
     func setTableView() {
-        tableView.rowHeight = 90
+        tableView.rowHeight = 90        
     }
     
     func bindViewModel() {
@@ -53,7 +54,6 @@ final class MemoListViewController: UIViewController, BindableType {
                 self?.presentMemoComposeVC(memo)}
             )
             .disposed(by: bag)
-        
     }
     
     private func presentMemoComposeVC(_ memo: Memo) {
