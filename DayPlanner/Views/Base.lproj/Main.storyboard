@@ -63,7 +63,21 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YnW-vh-8rC">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="1Oc-eD-jao"/>
+                        <barButtonItem key="leftBarButtonItem" title="Item" style="plain" id="IaX-h4-UXx">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="leading" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="u33-GV-iLo">
+                                <rect key="frame" x="16" y="5" width="200" height="34.333333333333329"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" imagePlacement="trailing" title="Button" imagePadding="5">
+                                    <imageReference key="image" image="chevron.down" catalog="system" symbolScale="small"/>
+                                    <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" weight="semibold"/>
+                                    <fontDescription key="titleFontDescription" type="system" pointSize="16"/>
+                                    <directionalEdgeInsets key="contentInsets" top="0.0" leading="0.0" bottom="0.0" trailing="0.0"/>
+                                    <color key="baseForegroundColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                            </button>
+                            <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="uQS-rx-zyK">
                             <imageReference key="image" image="Setting" symbolScale="medium"/>
                             <color key="tintColor" systemColor="systemGray4Color"/>
@@ -71,7 +85,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="containerView" destination="ZoF-Wy-0c7" id="LKm-uA-PyV"/>
-                        <outlet property="navButton" destination="1Oc-eD-jao" id="GT0-WT-Bli"/>
+                        <outlet property="navButton" destination="u33-GV-iLo" id="k5f-zq-30F"/>
                         <outlet property="segmentedControl" destination="L5h-LA-f2l" id="U8A-WA-H1B"/>
                         <outlet property="settingButton" destination="uQS-rx-zyK" id="Amz-lG-8ph"/>
                         <outlet property="shadowView" destination="tdI-bl-Esr" id="VUN-Xk-oBY"/>
@@ -780,6 +794,7 @@
         <image name="Setting" width="25" height="25"/>
         <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
+        <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="gearshape" catalog="system" width="128" height="123"/>
