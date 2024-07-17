@@ -16,7 +16,10 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var settingButton: UIBarButtonItem!
     @IBOutlet weak var shadowView: UIView!
-    @IBOutlet weak var navButton: UIBarButtonItem!
+   
+    @IBOutlet weak var navButton: UIButton!
+    
+ 
     
     private let filterSubject = BehaviorSubject<Filter>(value: .all)
     private let bag = DisposeBag()
@@ -63,15 +66,15 @@ final class MainViewController: UIViewController {
         
         let all = UIAction(title: "전체 일정", handler: { [weak self] _ in
             self?.filterSubject.onNext(.all)
-            self?.navButton.title = "전체 일정"
+//            self?.navButton.title = "전체 일정"
         })
         let upcomming = UIAction(title: "다가오는 일정", handler: { [weak self] _ in
             self?.filterSubject.onNext(.upcomming)
-            self?.navButton.title = "다가오는 일정"
+//            self?.navButton.title = "다가오는 일정"
         })
         let last = UIAction(title: "지난 일정", handler: { [weak self] _ in
             self?.filterSubject.onNext(.last)
-            self?.navButton.title = "지난 일정"
+//            self?.navButton.title = "지난 일정"
         })
                  
         let Items = [all, upcomming, last]
@@ -80,11 +83,12 @@ final class MainViewController: UIViewController {
     }
     
     private func setNavTitle() {
-        let font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        let attributes: [NSAttributedString.Key: Any] = [
-            .font: font
-        ]
-        navButton.setTitleTextAttributes(attributes, for: .normal)
+//        let font = UIFont.systemFont(ofSize: 18, weight: .bold)
+//        let attributes: [NSAttributedString.Key: Any] = [
+//            .font: font
+//        ]
+//        navButton.setTitleTextAttributes(attributes, for: .normal)
+        
     }
     
     private func setPageViewLayout() {
@@ -144,12 +148,12 @@ extension MainViewController: BindableType {
         
         output.movePage
             .map { $0 == 0 ? "전체 일정" : "캘린더" }
-            .drive(navButton.rx.title)
+            .drive(navButton.rx.title())
             .disposed(by: bag)
                 
         output.selecteFilter
             .map { $0.rawValue }
-            .bind(to: navButton.rx.title)
+            .bind(to: navButton.rx.title())
             .disposed(by: bag)
     }
 }
