@@ -17,8 +17,16 @@ protocol ViewModelType {
 
 class MemoViewModelType {
     let storage: MemoStorageType
+    let store: BehaviorSubject<[Memo]>
     
     init(storage: MemoStorageType) {
         self.storage = storage
+        self.store = BehaviorSubject(value: [])
+    }
+    
+    // 같은 저장소를 공유해야 하는경우
+    init(storage: MemoStorageType, store: BehaviorSubject<[Memo]>) {
+        self.storage = storage
+        self.store = store
     }
 }

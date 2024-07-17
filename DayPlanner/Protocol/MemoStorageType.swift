@@ -9,10 +9,6 @@ import Foundation
 import RxSwift
 
 protocol MemoStorageType {
-    var memoDatas: BehaviorSubject<[Memo]> { get set }
-    
-    @discardableResult
-    func filter(_ filter: Filter) -> Observable<Void>
     @discardableResult
     func create(memo: Memo) -> Observable<Void>
     @discardableResult

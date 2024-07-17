@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 
 final class MainViewModel: MemoViewModelType, ViewModelType {
+    
     private let bag = DisposeBag()
     
     struct Input {
@@ -24,41 +25,63 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
         let goToSettingVC: Observable<Void>
         let showMenu: Observable<Void>
         let movePage: Driver<Int>
-        let tileTapped: ControlEvent<Void>
+        let titleTapped: ControlEvent<Void>
         let selecteFilter: Observable<Filter>
     }
     
     func transform(input: Input) -> Output {
         // title이 Tap되고 segementIndex가 0인경우 이벤트를 방출
-        
+    
         let showMenuObservable = input.titleTap
             .withLatestFrom(input.segmentSeleted)
             .filter { $0 == 0 }
             .map { _ -> Void in  }
         
-        let filterShared = Observable.combineLatest(input.filterSubject, input.viewWillAppear)
+        let filterObservable = Observable.combineLatest(input.filterSubject, input.viewWillAppear)
             .share()
         
-        filterShared
+        let seleteFilter = filterObservable.map { $0.0 }
+
+        // 선택된 필터에 따라서 store를 변경        
+        filterObservable
             .map { $0.0 }
             .subscribe(onNext: { [weak self] filter in
+                
                 guard let self = self else { return }
+                
                 switch filter {
-                case .all:                    
-                    storage.filter(.all)
+                case .all:
+                    storage.fetch()                                   
+                        .bind(onNext: store.onNext(_:))
+                        .disposed(by: bag)
                 case .last:
-                    storage.filter(.last)
+                    storage.fetch()
+                        .flatMapLatest { array -> Observable<[Memo]> in
+                            Observable.just( array.filter {
+                                $0.date.checkBeforeToday() == .orderedAscending ||
+                                $0.date.compare(Date()) == .orderedAscending
+                            })
+                        }
+                        .bind(onNext: store.onNext(_:))
+                        .disposed(by: bag)
                 case .upcomming:
-                    storage.filter(.upcomming)
+                    storage.fetch()
+                        .flatMapLatest { array -> Observable<[Memo]> in
+                            Observable.just( array.filter {
+                                $0.date.checkBeforeToday() == .orderedDescending ||
+                                $0.date.compare(Date()) == .orderedDescending
+                            })
+                        }
+                        .bind(onNext: store.onNext(_:))
+                        .disposed(by: bag)
                 }
             })
             .disposed(by: bag)
         
-        
         return Output(goToSettingVC: input.settingButtonTap.asObservable(),
                       showMenu: showMenuObservable,
                       movePage: input.segmentSeleted.asDriver(),
-                      tileTapped: input.titleTap,
-                      selecteFilter: filterShared.map { $0.0} )
+                      titleTapped: input.titleTap,
+                      selecteFilter: seleteFilter )
     }
 }

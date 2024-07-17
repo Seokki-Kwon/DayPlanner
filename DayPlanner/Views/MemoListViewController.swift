@@ -61,7 +61,7 @@ final class MemoListViewController: UIViewController, BindableType {
         guard let composeNav = storyboard.instantiateViewController(withIdentifier: "ComposeNav") as? UINavigationController else {
             fatalError()
         }
-        guard var memoComposeVC = composeNav.viewControllers.first as? MemoComposeViewController else {
+        guard let memoComposeVC = composeNav.viewControllers.first as? MemoComposeViewController else {
             fatalError()
         }
         let viewModel = MemoComposeViewModel(memo: memo, storage: self.viewModel.storage)        
@@ -75,10 +75,10 @@ final class MemoListViewController: UIViewController, BindableType {
         guard let composeNav = storyboard.instantiateViewController(withIdentifier: "ComposeNav") as? UINavigationController else {
             fatalError()
         }
-        guard var memoComposeVC = composeNav.viewControllers.first as? MemoComposeViewController else {
+        guard let memoComposeVC = composeNav.viewControllers.first as? MemoComposeViewController else {
             fatalError()
         }
-        memoComposeVC.bind(viewModel: MemoComposeViewModel(storage: self.viewModel.storage))
+        memoComposeVC.bind(viewModel: MemoComposeViewModel(storage: viewModel.storage))
         
         present(composeNav, animated: true)
     }

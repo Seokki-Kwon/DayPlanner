@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let nav = storyboard.instantiateViewController(identifier: "MainNav") as? UINavigationController else {
             fatalError()
         }
-        guard var mainVC = nav.viewControllers.first as? MainViewController else {
+        guard let mainVC = nav.viewControllers.first as? MainViewController else {
             fatalError()
         }
         

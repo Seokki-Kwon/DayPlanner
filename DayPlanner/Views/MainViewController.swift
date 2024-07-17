@@ -15,8 +15,8 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var segmentedControl: UISegmentedControl!
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var settingButton: UIBarButtonItem!
-    @IBOutlet weak var navTitle: UIBarButtonItem!
     @IBOutlet weak var shadowView: UIView!
+    @IBOutlet weak var navButton: UIBarButtonItem!
     
     private let bag = DisposeBag()
     
@@ -30,7 +30,7 @@ final class MainViewController: UIViewController {
         
         var calendarVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MemoCalender") as! CalenderViewController
         
-        let listViewModel = MemoListViewModel(storage: viewModel.storage)
+        let listViewModel = MemoListViewModel(storage: viewModel.storage, store: viewModel.store)
         let calendarViewModel = CalendarViewModel(storage: viewModel.storage)
         
         memoListVC.bind(viewModel: listViewModel)
@@ -66,7 +66,7 @@ final class MainViewController: UIViewController {
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font
         ]
-        navTitle.setTitleTextAttributes(attributes, for: .normal)
+        navButton.setTitleTextAttributes(attributes, for: .normal)
     }
     
     private func setPageViewLayout() {
@@ -110,7 +110,7 @@ extension MainViewController: BindableType {
         // binding
         let input = MainViewModel.Input(settingButtonTap: settingButton.rx.tap,
                                         segmentSeleted: segmentedControl.rx.selectedSegmentIndex,
-                                        titleTap: navTitle.rx.tap,
+                                        titleTap: navButton.rx.tap,
                                         filterSubject: filterSubject,
                                         viewWillAppear: self.rx.viewWillAppear)
         
@@ -126,24 +126,12 @@ extension MainViewController: BindableType {
         
         output.movePage
             .map { $0 == 0 ? "전체 일정" : "캘린더" }
-            .drive(navTitle.rx.title)
-            .disposed(by: bag)
-        
-        output.tileTapped
-            .debug()
-            .withUnretained(self)
-            .flatMapLatest({ (owner, _) -> Observable<Filter> in
-                owner.navTitle.presentMenu()
-            })
-            .bind(to: filterSubject)
+            .drive(navButton.rx.title)
             .disposed(by: bag)
         
         output.selecteFilter
             .map { $0.rawValue }
-            .withUnretained(self)
-            .subscribe(onNext: { (owner, text) in
-                owner.navTitle.title = text
-            })
+            .bind(to: navButton.rx.title)
             .disposed(by: bag)
     }
 }
