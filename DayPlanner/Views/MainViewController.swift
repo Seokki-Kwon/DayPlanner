@@ -18,6 +18,7 @@ final class MainViewController: UIViewController {
     @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var navButton: UIBarButtonItem!
     
+    private let filterSubject = BehaviorSubject<Filter>(value: .all)
     private let bag = DisposeBag()
     
     private var pageViewController: UIPageViewController!
@@ -59,6 +60,23 @@ final class MainViewController: UIViewController {
         shadowView.layer.masksToBounds = false
         shadowView.layer.cornerRadius = 16
         shadowView.layer.backgroundColor = UIColor.white.cgColor
+        
+        let all = UIAction(title: "전체 일정", handler: { [weak self] _ in
+            self?.filterSubject.onNext(.all)
+            self?.navButton.title = "전체 일정"
+        })
+        let upcomming = UIAction(title: "다가오는 일정", handler: { [weak self] _ in
+            self?.filterSubject.onNext(.upcomming)
+            self?.navButton.title = "다가오는 일정"
+        })
+        let last = UIAction(title: "지난 일정", handler: { [weak self] _ in
+            self?.filterSubject.onNext(.last)
+            self?.navButton.title = "지난 일정"
+        })
+                 
+        let Items = [all, upcomming, last]
+        
+        navButton.menu = UIMenu(children: Items)
     }
     
     private func setNavTitle() {
@@ -105,7 +123,7 @@ final class MainViewController: UIViewController {
 extension MainViewController: BindableType {
     
     func bindViewModel() {
-        let filterSubject = BehaviorSubject<Filter>(value: .all)
+       
         
         // binding
         let input = MainViewModel.Input(settingButtonTap: settingButton.rx.tap,
@@ -128,7 +146,7 @@ extension MainViewController: BindableType {
             .map { $0 == 0 ? "전체 일정" : "캘린더" }
             .drive(navButton.rx.title)
             .disposed(by: bag)
-        
+                
         output.selecteFilter
             .map { $0.rawValue }
             .bind(to: navButton.rx.title)
