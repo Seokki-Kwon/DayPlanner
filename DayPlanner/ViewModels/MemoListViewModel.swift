@@ -12,12 +12,13 @@ import RxCocoa
 // input: addButtonTap, modelSelected
 // output: showComposeMemoVC
 final class MemoListViewModel: MemoViewModelType, ViewModelType {
+    
     private let bag = DisposeBag()
     private let memoComposeTrigger = PublishSubject<Void>()
     private let memoCellSubject = PublishSubject<Memo>()
     
-    private var memoData: Observable<[Memo]> {        
-        return storage.memoDatas
+    private var memoList: Observable<[Memo]> {
+        return store
     }
     
     struct Input {
@@ -32,6 +33,7 @@ final class MemoListViewModel: MemoViewModelType, ViewModelType {
     }
     
     func transform(input: Input) -> Output {
+   
         input.memoCellSelected
             .bind(to: memoCellSubject)
             .disposed(by: bag)
@@ -40,7 +42,7 @@ final class MemoListViewModel: MemoViewModelType, ViewModelType {
             .bind(to: memoComposeTrigger)
             .disposed(by: bag)
         
-        return Output(tableViewDriver: memoData.asDriver(onErrorJustReturn: []), 
+        return Output(tableViewDriver: memoList.asDriver(onErrorJustReturn: []),
                       presentMemoComposeVC: memoComposeTrigger,
                       goToMemoDetailVC: memoCellSubject)
     }
