@@ -63,12 +63,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="YnW-vh-8rC">
-                        <barButtonItem key="leftBarButtonItem" title="Item" changesSelectionAsPrimaryAction="YES" id="QK9-GO-dg4">
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            <connections>
-                                <action selector="testButton:" destination="Zfe-mP-wYw" id="aft-7R-hvq"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" title="Item" id="1Oc-eD-jao"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="uQS-rx-zyK">
                             <imageReference key="image" image="gearshape" catalog="system" symbolScale="medium"/>
                             <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -76,14 +71,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="containerView" destination="ZoF-Wy-0c7" id="LKm-uA-PyV"/>
-                        <outlet property="navTitle" destination="QK9-GO-dg4" id="JDo-1f-yuU"/>
+                        <outlet property="navButton" destination="1Oc-eD-jao" id="GT0-WT-Bli"/>
                         <outlet property="segmentedControl" destination="L5h-LA-f2l" id="U8A-WA-H1B"/>
                         <outlet property="settingButton" destination="uQS-rx-zyK" id="Amz-lG-8ph"/>
                         <outlet property="shadowView" destination="tdI-bl-Esr" id="VUN-Xk-oBY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6wD-ZC-oOH" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="Zfe-mP-wYw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="6672.5190839694651" y="-718.30985915492965"/>
         </scene>
@@ -800,19 +794,19 @@
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGray5Color">
-            <color red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGroupedBackgroundColor">
-            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

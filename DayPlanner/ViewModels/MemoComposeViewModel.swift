@@ -15,6 +15,7 @@ import UIKit
 // ControlProperty: Subject같은 개념, UIElement.rx를 통해서 접근
 
 class MemoComposeViewModel: MemoViewModelType, ViewModelType {
+    
     private var memo: Memo
     
     private let bag = DisposeBag()
@@ -112,11 +113,9 @@ class MemoComposeViewModel: MemoViewModelType, ViewModelType {
             let content = try memoContentSubject.value()
             let color = try colorSubject.value()
             let date = try dateSubject.value()
-            storage.update(memo: Memo(id: memo.id, title: title, content: content, date: date, colorString: color.toHexString()))
-                .do(onNext: { [weak self] in
-                    guard let self = self else { return }
-                    storage.fetch()
-                })
+            let memo = Memo(id: memo.id, title: title, content: content, date: date, colorString: color.toHexString())
+            
+            storage.update(memo: memo)
                 .bind(to: trigger)
                 .disposed(by: bag)
             
@@ -127,10 +126,6 @@ class MemoComposeViewModel: MemoViewModelType, ViewModelType {
     
     private func performDelete(actionType: ActionSheetType) {
         storage.delete(memo: memo)
-            .do(onNext: { [weak self] in
-                guard let self = self else { return }
-                storage.fetch()
-            })
             .bind(to: trigger)
             .disposed(by: bag)
     }

@@ -10,17 +10,9 @@ import RxSwift
 import RxCocoa
 import CoreData
 
-enum Filter: String {
-    case all = "전체 일정", upcomming = "다가오는 일정", last = "지난 일정"
-}
-
-/// CoreData < -> ViewModel
 final class CoreDataStorage: MemoStorageType {
     
-    public var memoDatas = BehaviorSubject<[Memo]>(value: [])
-    
     private let modelName: String
-    private let store = BehaviorSubject<[Memo]>(value: [])
     
     // container
     private lazy var persistentContainer: NSPersistentContainer = {
@@ -58,8 +50,7 @@ final class CoreDataStorage: MemoStorageType {
         
         do {
             _ = try mainContext.save()
-            let currentData = try store.value()
-            store.onNext(currentData + [memo])
+            
             return Observable.just(())
         } catch {
             return Observable.error(error)
@@ -84,8 +75,7 @@ final class CoreDataStorage: MemoStorageType {
                 
                 do {
                     _ = try mainContext.save()
-                    let updated = try store.value().map { $0.id == memo.id ? memo : $0 }
-                    store.onNext(updated)
+                    
                 } catch {
                     return Observable.error(error)
                 }
@@ -113,8 +103,7 @@ final class CoreDataStorage: MemoStorageType {
                let memoObject = fetchRequest.first {
                 mainContext.delete(memoObject)
                 try mainContext.save()
-                let updated = try store.value().filter { $0.id != memo.id }
-                store.onNext(updated)
+                
                 return Observable.just(())
             }
         } catch {
@@ -132,30 +121,10 @@ final class CoreDataStorage: MemoStorageType {
             let data = try mainContext.fetch(fetchRequest)
             
             let memoDatas = data.map { Memo(id: $0.id!, title: $0.title!, content: $0.content!, date: $0.date!, colorString: $0.color! )}
-            store.onNext(memoDatas)
-            return store
+
+            return Observable.just(memoDatas)
         } catch {
             return Observable.error(error)
         }
-    }
-    
-    
-    /// 메모 필터링
-    func filter(_ filter: Filter = .all) -> Observable<Void>  {
-        switch filter {
-        case .all:
-            try? memoDatas.onNext(store.value())
-        case .last:
-            try? memoDatas.onNext(store.value().filter {
-                // 지난날짜 이거나 시간이 지난경우
-                $0.date.checkBeforeToday() == .orderedAscending || $0.date.compare(Date()) == .orderedAscending
-            })
-        case .upcomming:
-            try? memoDatas.onNext(store.value().filter {
-                // 비교날자가 이후날짜 이거나 같은날짜 시간보다 적은경우
-                $0.date.checkBeforeToday() == .orderedDescending || $0.date.compare(Date()) == .orderedDescending
-            })
-        }
-        return Observable.just(())
     }
 }
