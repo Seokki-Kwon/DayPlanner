@@ -10,15 +10,18 @@ import RxSwift
 import RxCocoa
 
 final class CalendarViewModel: MemoViewModelType, ViewModelType {
-    private var memoData: Observable<[Memo]> {
-        return storage.fetch()
+    
+    private var memoList: Observable<[Memo]> {
+        return store
     }
+    
     private let bag = DisposeBag()
     private let currentMonthMemo = BehaviorRelay<[Memo]>(value: [])
     private let currentDayMemo = BehaviorRelay<[Memo]>(value: [])
     
     struct Input {
         let seletedDate: BehaviorRelay<Date>
+        let viewWillAppear: Observable<Bool>
     }
     struct Output {
         let seletedDate: Observable<Date>
@@ -26,8 +29,17 @@ final class CalendarViewModel: MemoViewModelType, ViewModelType {
     }
     
     func transform(input: Input) -> Output {
-        Observable.combineLatest(input.seletedDate, memoData)
-            .map { (date, memoArray) in
+        
+        input.viewWillAppear
+            .withUnretained(self)
+            .flatMapLatest({ (owner, _) -> Observable<[Memo]>  in
+                owner.storage.fetch()
+            })
+            .bind(onNext: store.onNext(_:))
+            .disposed(by: bag)
+        
+        Observable.combineLatest(input.seletedDate, memoList, input.viewWillAppear)
+            .map { (date, memoArray, _) in
                 memoArray.filter { $0.date.checkCurrnetMotnh(date: date)}
             }
             .bind(to: currentMonthMemo)

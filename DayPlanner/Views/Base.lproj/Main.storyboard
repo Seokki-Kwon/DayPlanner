@@ -65,8 +65,8 @@
                     <navigationItem key="navigationItem" id="YnW-vh-8rC">
                         <barButtonItem key="leftBarButtonItem" title="Item" id="1Oc-eD-jao"/>
                         <barButtonItem key="rightBarButtonItem" title="Item" id="uQS-rx-zyK">
-                            <imageReference key="image" image="gearshape" catalog="system" symbolScale="medium"/>
-                            <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <imageReference key="image" image="Setting" symbolScale="medium"/>
+                            <color key="tintColor" systemColor="systemGray4Color"/>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
@@ -104,8 +104,8 @@
                                                     <rect key="frame" x="20" y="11" width="353" height="91"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qgg-Ho-rNW">
-                                                            <rect key="frame" x="29.999999999999996" y="10.000000000000002" width="45.666666666666657" height="21.666666666666671"/>
-                                                            <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                                            <rect key="frame" x="29.999999999999996" y="14.999999999999998" width="40.666666666666657" height="20.333333333333329"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                                             <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -134,13 +134,13 @@
                                                         <constraint firstItem="1Pd-4X-hg1" firstAttribute="leading" secondItem="Qag-So-Kcu" secondAttribute="leading" constant="10" id="5dm-iT-nHv"/>
                                                         <constraint firstAttribute="bottom" secondItem="oNM-ic-TG3" secondAttribute="bottom" constant="10" id="HeI-D8-I6t"/>
                                                         <constraint firstItem="Qgg-Ho-rNW" firstAttribute="leading" secondItem="1Pd-4X-hg1" secondAttribute="leading" constant="20" id="d1p-G9-rwJ"/>
-                                                        <constraint firstItem="Qgg-Ho-rNW" firstAttribute="top" secondItem="Qag-So-Kcu" secondAttribute="top" constant="10" id="oUy-bA-ERJ"/>
+                                                        <constraint firstItem="Qgg-Ho-rNW" firstAttribute="top" secondItem="Qag-So-Kcu" secondAttribute="top" constant="15" id="oUy-bA-ERJ"/>
                                                         <constraint firstItem="oNM-ic-TG3" firstAttribute="leading" secondItem="1Pd-4X-hg1" secondAttribute="leading" constant="20" id="qcu-OX-aag"/>
                                                         <constraint firstItem="1Pd-4X-hg1" firstAttribute="centerY" secondItem="Qag-So-Kcu" secondAttribute="centerY" id="xev-GJ-bv9"/>
                                                     </constraints>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                                            <integer key="value" value="15"/>
+                                                            <integer key="value" value="20"/>
                                                         </userDefinedRuntimeAttribute>
                                                         <userDefinedRuntimeAttribute type="size" keyPath="layer.shadowOffset">
                                                             <size key="value" width="1" height="2"/>
@@ -777,6 +777,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Setting" width="25" height="25"/>
         <image name="calendar" catalog="system" width="128" height="107"/>
         <image name="chevron.backward" catalog="system" width="97" height="128"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
@@ -792,6 +793,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray5Color">
             <color red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
