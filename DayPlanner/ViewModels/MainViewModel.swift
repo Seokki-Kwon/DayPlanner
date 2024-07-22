@@ -13,29 +13,24 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
     
     private let bag = DisposeBag()
     
+    // Input
     struct Input {
         let settingButtonTap: ControlEvent<Void>
         let segmentSeleted: ControlProperty<Int>
-        let titleTap: ControlEvent<Void>
         let filterSubject: BehaviorSubject<Filter>
         let viewWillAppear: Observable<Bool>
     }
     
+    // Output
     struct Output {
         let goToSettingVC: Observable<Void>
-        let showMenu: Observable<Void>
         let movePage: Driver<Int>
-        let titleTapped: ControlEvent<Void>
         let selecteFilter: Observable<Filter>
+        let segmentSelected: Observable<Int>
     }
     
+    // Binding
     func transform(input: Input) -> Output {
-        // title이 Tap되고 segementIndex가 0인경우 이벤트를 방출
-    
-        let showMenuObservable = input.titleTap
-            .withLatestFrom(input.segmentSeleted)
-            .filter { $0 == 0 }
-            .map { _ -> Void in  }
         
         let filterObservable = Observable.combineLatest(input.filterSubject, input.viewWillAppear)
             .share()
@@ -79,9 +74,9 @@ final class MainViewModel: MemoViewModelType, ViewModelType {
             .disposed(by: bag)
         
         return Output(goToSettingVC: input.settingButtonTap.asObservable(),
-                      showMenu: showMenuObservable,
                       movePage: input.segmentSeleted.asDriver(),
-                      titleTapped: input.titleTap,
-                      selecteFilter: seleteFilter )
+                      selecteFilter: seleteFilter,
+                      segmentSelected: input.segmentSeleted.asObservable()
+        )
     }
 }
