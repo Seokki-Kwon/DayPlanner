@@ -19,8 +19,6 @@ final class MainViewController: UIViewController {
    
     @IBOutlet weak var navButton: UIButton!
     
- 
-    
     private let filterSubject = BehaviorSubject<Filter>(value: .all)
     private let bag = DisposeBag()
     
@@ -50,7 +48,6 @@ final class MainViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        setNavTitle()
         setPageViewLayout()
     }
     
@@ -66,29 +63,18 @@ final class MainViewController: UIViewController {
         
         let all = UIAction(title: "전체 일정", handler: { [weak self] _ in
             self?.filterSubject.onNext(.all)
-//            self?.navButton.title = "전체 일정"
         })
         let upcomming = UIAction(title: "다가오는 일정", handler: { [weak self] _ in
             self?.filterSubject.onNext(.upcomming)
-//            self?.navButton.title = "다가오는 일정"
         })
+        
         let last = UIAction(title: "지난 일정", handler: { [weak self] _ in
             self?.filterSubject.onNext(.last)
-//            self?.navButton.title = "지난 일정"
         })
-                 
+        
         let Items = [all, upcomming, last]
         
         navButton.menu = UIMenu(children: Items)
-    }
-    
-    private func setNavTitle() {
-//        let font = UIFont.systemFont(ofSize: 18, weight: .bold)
-//        let attributes: [NSAttributedString.Key: Any] = [
-//            .font: font
-//        ]
-//        navButton.setTitleTextAttributes(attributes, for: .normal)
-        
     }
     
     private func setPageViewLayout() {
@@ -127,12 +113,9 @@ final class MainViewController: UIViewController {
 extension MainViewController: BindableType {
     
     func bindViewModel() {
-       
-        
         // binding
         let input = MainViewModel.Input(settingButtonTap: settingButton.rx.tap,
                                         segmentSeleted: segmentedControl.rx.selectedSegmentIndex,
-                                        titleTap: navButton.rx.tap,
                                         filterSubject: filterSubject,
                                         viewWillAppear: self.rx.viewWillAppear)
         
@@ -154,6 +137,11 @@ extension MainViewController: BindableType {
         output.selecteFilter
             .map { $0.rawValue }
             .bind(to: navButton.rx.title())
+            .disposed(by: bag)
+        
+        output.segmentSelected
+            .map { $0 == 0 ? true : false }
+            .bind(to: navButton.rx.isEnabled)
             .disposed(by: bag)
     }
 }
