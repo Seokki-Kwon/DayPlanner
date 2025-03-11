@@ -13,7 +13,7 @@
 ### 구동 영상
 | 일정 생성 | 일정 편집 | 캘린더 |
 |------------------------|--------------------------|------------------------|
-|  <img src="https://github.com/user-attachments/assets/20c510ab-e9c8-4367-b0cb-fbf82e1ee9ab" width=300 />   | <img src="https://github.com/user-attachments/assets/af2b96bf-1e73-4da4-bed9-fa3b780696a1" width=300 /> | <img src="https://github.com/user-attachments/assets/beb0b554-2a49-47ac-9855-7498396a2a70" width=300 /> |
+|  <img src="https://github.com/user-attachments/assets/20c510ab-e9c8-4367-b0cb-fbf82e1ee9ab" width=220 />   | <img src="https://github.com/user-attachments/assets/af2b96bf-1e73-4da4-bed9-fa3b780696a1" width=220 /> | <img src="https://github.com/user-attachments/assets/beb0b554-2a49-47ac-9855-7498396a2a70" width=220 /> |
 
 ### 트러블슈팅
 ### 1️⃣ TabView 내에서 무한 스크롤 캘린더 구현 문제  
